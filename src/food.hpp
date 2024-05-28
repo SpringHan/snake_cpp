@@ -1,5 +1,8 @@
 // Food
 
+#ifndef _FOOD_H_
+#define _FOOD_H_
+
 enum Color {
 	Red,
 	Orange,
@@ -17,7 +20,7 @@ public:
   FoodKind(int kind);
 	~FoodKind() {}
 
-	int foodScore() { return color; }
+	friend class Food;
 };
 
 class Food
@@ -27,4 +30,8 @@ class Food
 public:
   Food(int _kind, int pos): kind(_kind), position(pos) {}
 	~Food() {}
+
+	int earnScore() { return kind.color; }
 };
+
+#endif

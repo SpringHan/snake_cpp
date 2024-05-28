@@ -1,4 +1,7 @@
 // Basic classes for snake.
+#ifndef _GAME_H_
+#define _GAME_H_
+
 #include "food.hpp"
 
 #include <vector>
@@ -66,3 +69,5 @@ public:
 
 // Utils
 std::string time_format(int);
+
+#endif
