@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [-DQT_WIDGETS_LIB, -I/usr/include/qt/QtWidgets, -I/usr/include/qt, -DQT_GUI_LIB, -I/usr/include/qt/QtGui, -DQT_CORE_LIB, -I/usr/include/qt/QtCore, -lQt5Widgets, -lQt5Gui, -lQt5Core]
