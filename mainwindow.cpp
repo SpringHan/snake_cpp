@@ -1,36 +1,24 @@
 #include "mainwindow.hpp"
-#include "qboxlayout.h"
-#include "qnamespace.h"
-#include "qobjectdefs.h"
-#include "qpushbutton.h"
-#include "qtableview.h"
 
-#include <QPushButton>
-#include <QTableView>
-#include <QBoxLayout>
+#include "src/control_line/control_line.hpp"
+#include "src/game_tables/game_tables.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	this->setWindowTitle("Snake game");
+	main_widget = new QWidget(this);
+	whole = new QVBoxLayout;
 
-	// Controller layout
-	start_btn = new QPushButton("开始");
-	pause_btn = new QPushButton("暂停");
-
-	control_line = new QHBoxLayout;
-	control_line->addWidget(start_btn, 0, Qt::Alignment().setFlag(Qt::AlignLeft));
-	control_line->addWidget(pause_btn, 1, Qt::Alignment().setFlag(Qt::AlignRight));
+	control_line = new ControlLine;
 
 	// Game blocks
-	blocks_table = new QTableView;
+	blocks = new GameBlocks;
 
 	// Whole Vertical layout
-	whole = new QVBoxLayout;
-	whole->addLayout(control_line);
-	whole->addWidget(blocks_table);
+	whole->addWidget(control_line);
+	whole->addWidget(blocks);
 
-	main_widget = new QWidget(this);
 	main_widget->setLayout(whole);
 	this->setCentralWidget(main_widget);
 }

@@ -1,15 +1,10 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include "qboxlayout.h"
-#include "qlabel.h"
-#include "qobjectdefs.h"
-#include "qpushbutton.h"
-#include "qtableview.h"
-#include <QMainWindow>
+#include "./src/control_line/control_line.hpp"
+#include "./src/game_tables/game_tables.hpp"
 
-#include <QLabel>
-#include <QPushButton>
+#include <QMainWindow>
 #include <QTableView>
 #include <QBoxLayout>
 
@@ -24,10 +19,8 @@ public:
 private:
 	QWidget *main_widget;
 	QVBoxLayout *whole;
-	QHBoxLayout *control_line;
-	QPushButton *start_btn;
-	QPushButton *pause_btn;
-	QTableView *blocks_table;
+	ControlLine *control_line;
+	GameBlocks *blocks;
 
 // private slots:
 // 	void changeText();
