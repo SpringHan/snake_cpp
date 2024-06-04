@@ -17,10 +17,12 @@ public:
   ControlLine(QWidget *parent = nullptr);
 
 private:
-	QWidget *main_widget;
 	QBoxLayout *main_layout;
 	QPushButton *start_btn;
 	QPushButton *pause_btn;
+
+private slots:
+	void printSize();
 };
 
 #endif

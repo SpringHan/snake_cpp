@@ -2,13 +2,15 @@
 
 #include "qboxlayout.h"
 #include "qnamespace.h"
+#include "qobjectdefs.h"
 #include "qpushbutton.h"
 #include "qwidget.h"
+
+#include <iostream>
 
 ControlLine::ControlLine(QWidget *parent)
 	:QWidget(parent)
 {
-	main_widget = new QWidget(this);
 	main_layout = new QHBoxLayout;
 
 	start_btn = new QPushButton("开始");
@@ -17,5 +19,11 @@ ControlLine::ControlLine(QWidget *parent)
 	main_layout->addWidget(start_btn, 0, Qt::AlignLeft);
 	main_layout->addWidget(pause_btn, 1, Qt::AlignRight);
 
-	main_widget->setLayout(main_layout);
+	this->setLayout(main_layout);
+
+	connect(start_btn, SIGNAL(clicked()), this, SLOT(printSize()));
+}
+
+void ControlLine::printSize() {
+	std::cout << this->size().width() << std::endl;
 }

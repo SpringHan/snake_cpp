@@ -2,11 +2,13 @@
 #define MAINWINDOW_HPP
 
 #include "./src/control_line/control_line.hpp"
-#include "./src/game_tables/game_tables.hpp"
+#include "./src/game_blocks/game_blocks.hpp"
+#include "qwidget.h"
 
 #include <QMainWindow>
 #include <QTableView>
 #include <QBoxLayout>
+#include <QEvent>
 
 class MainWindow : public QMainWindow
 {
@@ -22,8 +24,11 @@ private:
 	ControlLine *control_line;
 	GameBlocks *blocks;
 
-// private slots:
-// 	void changeText();
+	void initControlLine();
+	void initGameTables();
+
+protected:
+	void resizeEvent(QResizeEvent *event);
 };
 
 #endif // MAINWINDOW_HPP
