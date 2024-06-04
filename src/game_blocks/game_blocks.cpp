@@ -25,3 +25,17 @@ GameBlocks::GameBlocks(QWidget *parent)
 	view->setBackgroundBrush(QBrush(bg));
 	blocks->addLine(0, 0, 50, 50);
 }
+
+void GameBlocks::resetSize(QSize size) {
+	// QSize nsize = QSize(size.width() * 0.98, size.height() * 0.95);
+	QSize nsize = size;
+
+	QPixmap bg(size.width() / 30, size.height() / 20);
+	QPainter p(&bg);
+	p.setBrush(Qt::cyan);
+	p.drawRect(0, 0, nsize.width(), nsize.height());
+
+	view->setBackgroundBrush(QBrush(bg));
+	view->resize(nsize);
+	this->resize(nsize);
+}

@@ -14,7 +14,7 @@ class GameBlocks: public QWidget
 	Q_OBJECT
 public:
   GameBlocks(QWidget *parent = nullptr);
-	void resetSize();
+	void resetSize(QSize size);
 
 private:
 	QGraphicsScene *blocks;

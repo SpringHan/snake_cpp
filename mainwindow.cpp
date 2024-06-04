@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 	this->setWindowTitle("Snake game");
 	main_widget = new QWidget(this);
 	whole = new QVBoxLayout;
+	whole->setMargin(0);
 
 	// Control Line
 	control_line = new ControlLine;
@@ -33,7 +34,7 @@ void MainWindow::initControlLine() {}
 void MainWindow::initGameTables() {}
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
-	blocks->setMaximumSize(this->size().width(), this->size().height() * 0.7);
+	blocks->resetSize(this->size());
 }
 
 MainWindow::~MainWindow() {}
