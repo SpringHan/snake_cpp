@@ -17,8 +17,10 @@ class FoodKind
 {
 	Color color;
 public:
-  FoodKind(int kind);
+  FoodKind() {}
 	~FoodKind() {}
+
+	void setKind(int kind);
 
 	friend class Food;
 };
@@ -28,10 +30,11 @@ class Food
 	FoodKind kind;
 	int position;
 public:
-  Food(int _kind, int pos): kind(_kind), position(pos) {}
+  Food() {}
 	~Food() {}
 
 	int earnScore() { return kind.color; }
+	void setFood(int kind, int pos);
 };
 
 #endif

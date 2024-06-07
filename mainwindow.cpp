@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	this->setWindowTitle("Snake game");
+
 	main_widget = new QWidget(this);
 	whole = new QVBoxLayout;
 	whole->setMargin(0);
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	// Whole Vertical layout
 	whole->addWidget(control_line, 0, Qt::AlignTop);
-	whole->addWidget(blocks, 1);
+	whole->addWidget(blocks, 1, Qt::AlignTop);
 
 	main_widget->setLayout(whole);
 	this->setCentralWidget(main_widget);

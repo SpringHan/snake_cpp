@@ -1,6 +1,6 @@
 #include "food.hpp"
 
-FoodKind::FoodKind(int kind) {
+void FoodKind::setKind(int kind) {
 	// NOTE: Maybe this code would be extracted out.
   switch (kind) {
   case 0:
@@ -25,4 +25,10 @@ FoodKind::FoodKind(int kind) {
 		color = Color::White;
 		break;
   }
+}
+
+void Food::setFood(int kind, int pos) {
+	this->kind.setKind(kind);
+
+	position = pos;
 }

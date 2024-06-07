@@ -2,15 +2,21 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#include "food.hpp"
+#include "qobject.h"
+#include "qobjectdefs.h"
 
-#include <vector>
+#include "./food.hpp"
+#include "./snake.hpp"
+
 #include <chrono>
 #include <string>
 
-#define TOTAL_BLOCKS 28 * 18
-#define INITIAL_POS 9 * 18 + 8
+#include <QObject>
+#include <QTimer>
 
+#define TOTAL_BLOCKS 25 * 15
+
+// Map
 class Map
 {
 	short blocks[TOTAL_BLOCKS];
@@ -22,37 +28,26 @@ public:
 	~Map() {}
 };
 
-class Snake
-{
-	unsigned int length;
-	std::vector<int> blocks;
-public:
-  Snake(): length(1) {
-		this->blocks.push_back(INITIAL_POS);
-	}
 
-	~Snake() {}
-
-	unsigned int getLength() const {
-		return length;
-	}
-
-	void update();
-};
-
+// Game
 using namespace std::chrono;
 
-class Game
+class Game: public QObject
 {
+	Q_OBJECT
+
+private:
 	Map blocks;
 	Snake snake;
+	Food food;
 
 	int score;
 
 	time_point<system_clock> start_time;
 	int stored_time;
+
 public:
-  Game(): stored_time(0) {}
+  Game(QObject *parent = nullptr);
 	~Game() {}
 
 	int getScore() const;

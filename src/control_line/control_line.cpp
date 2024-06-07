@@ -1,6 +1,8 @@
 #include "./control_line.hpp"
+#include "../game_blocks/game_blocks.hpp"
 
 #include "qboxlayout.h"
+#include "qmainwindow.h"
 #include "qnamespace.h"
 #include "qobjectdefs.h"
 #include "qpushbutton.h"
@@ -18,10 +20,12 @@ ControlLine::ControlLine(QWidget *parent)
 
 	main_layout->addWidget(start_btn, 0, Qt::AlignLeft);
 	main_layout->addWidget(pause_btn, 1, Qt::AlignRight);
-
+	
 	this->setLayout(main_layout);
 
-	connect(start_btn, SIGNAL(clicked()), this, SLOT(printSize()));
+	// connect(start_btn, &QPushButton::clicked, this, [this]() {
+	// 	this->parentWidget()->findChild<GameBlocks*>()->changeItemColor(0, Qt::red);
+	// });
 }
 
 void ControlLine::printSize() {

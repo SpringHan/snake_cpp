@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "qobject.h"
 
 #include <chrono>
 
@@ -12,13 +13,11 @@ void Map::reset() {
 	}
 }
 
-// Food
-
-// Snake
-void Snake::update() {
+// Game
+Game::Game(QObject *parent): QObject(parent) {
+	stored_time = 0;
 }
 
-// Game
 void Game::pauseGame() {
 	stored_time += this->playTime();
 }
