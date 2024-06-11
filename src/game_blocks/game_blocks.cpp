@@ -19,6 +19,9 @@
 #include <QPainter>
 #include <QHeaderView>
 
+// TODO: Remove
+#include <iostream>
+
 GameBlocks::GameBlocks(QWidget *parent)
 	:QWidget(parent)
 {
@@ -76,5 +79,15 @@ void GameBlocks::initTableItems() {
 }
 
 void GameBlocks::changeItemColor(int idx, QColor color) {
-	table->item(0, 0)->setBackground(color);
+	float temp = (float)(idx + 1) / 25;
+	int line = (int)temp;
+
+	if (temp == line) {
+		line--;
+	}
+
+	int column = idx - line * 25;
+	line--;
+
+	table->item(line, column)->setBackground(color);
 }

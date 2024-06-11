@@ -1,10 +1,16 @@
 #include "game.hpp"
+
 #include "qobject.h"
+#include "qobjectdefs.h"
+#include "snake.hpp"
 
 #include <chrono>
 
 #include <string>
 #include <sstream>
+
+// TODO: Remove
+#include <iostream>
 
 // Map
 void Map::reset() {
@@ -15,11 +21,23 @@ void Map::reset() {
 
 // Game
 Game::Game(QObject *parent): QObject(parent) {
+	snake = new Snake(this);
+
 	stored_time = 0;
+	paused = true;
+	// TODO: Start timer.
+}
+
+void Game::startGame() {
+	paused = false;
+	snake->paintInitialBlocks();
+	connect(&timer, SIGNAL(timeout()), snake, SLOT(advance()));
+	timer.start(900);
 }
 
 void Game::pauseGame() {
 	stored_time += this->playTime();
+	paused = true;
 }
 
 void Game::continueGame() {
@@ -41,6 +59,21 @@ int Game::playTime() {
 	duration<double> duration_time = end_time - this->start_time;
 
 	return (int) duration_time.count();
+}
+
+void Game::changeDirection(MoveDirection direction) {
+	if (paused) {
+		return;
+	}
+
+	int origin = snake->direction;
+	int modify_to = direction;
+
+	if (origin == modify_to || origin == -modify_to) {
+		return;
+	}
+
+	snake->direction = direction;
 }
 
 // Utils

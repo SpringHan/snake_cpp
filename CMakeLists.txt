@@ -20,6 +20,12 @@ set(PROJECT_SOURCES
         src/control_line/control_line.hpp
         src/game_blocks/game_blocks.cpp
         src/game_blocks/game_blocks.hpp
+        src/game/game.cpp
+        src/game/game.hpp
+        src/game/snake.cpp
+        src/game/snake.hpp
+        src/game/food.cpp
+        src/game/food.hpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

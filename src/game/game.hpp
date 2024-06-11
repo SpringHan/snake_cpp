@@ -7,6 +7,7 @@
 
 #include "./food.hpp"
 #include "./snake.hpp"
+#include "qtimer.h"
 
 #include <chrono>
 #include <string>
@@ -38,13 +39,16 @@ class Game: public QObject
 
 private:
 	Map blocks;
-	Snake snake;
 	Food food;
+	Snake *snake;
 
 	int score;
 
 	time_point<system_clock> start_time;
 	int stored_time;
+
+	bool paused;
+	QTimer timer;
 
 public:
   Game(QObject *parent = nullptr);
@@ -52,14 +56,17 @@ public:
 
 	int getScore() const;
 
+	// Time
+	void initTime();
+	int playTime();
+
 	// General
+	void startGame();
 	void pauseGame();
 	void continueGame();
 	void finishGame();
 
-	// Time
-	void initTime();
-	int playTime();
+	void changeDirection(MoveDirection direction);
 };
 
 // Utils
