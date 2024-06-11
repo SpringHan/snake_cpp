@@ -6,6 +6,7 @@
 #include "qgraphicsscene.h"
 #include "qgraphicsview.h"
 #include "qobjectdefs.h"
+#include "qtableview.h"
 
 #include <QWidget>
 #include <QGraphicsScene>
@@ -24,9 +25,6 @@ public:
 	void changeItemColor(int idx, QColor color);
 
 private:
-	// QGraphicsScene *blocks;
-	// QGraphicsView *view;
-	// QHBoxLayout *main_layout;
 	QTableWidget *table;
 
 	void initTableSize(QSize size);

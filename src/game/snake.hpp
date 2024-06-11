@@ -1,6 +1,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
+#include "food.hpp"
 #include "qobject.h"
 #include "qobjectdefs.h"
 
@@ -39,6 +40,7 @@ public:
 		return blocks.size();
 	}
 
+	friend class Food;
 	friend class Game;
 
 public slots:

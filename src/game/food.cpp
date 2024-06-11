@@ -1,34 +1,46 @@
 #include "food.hpp"
+#include "./game.hpp"
+#include "./snake.hpp"
+#include "../game_blocks/game_blocks.hpp"
 
-void FoodKind::setKind(int kind) {
-	// NOTE: Maybe this code would be extracted out.
-  switch (kind) {
-  case 0:
-    color = Color::Red;
-    break;
-	case 1:
-		color = Color::Orange;
-		break;
-	case 2:
-		color = Color::Yellow;
-		break;
-	case 3:
-		color = Color::Green;
-		break;
-	case 4:
-		color = Color::Blue;
-		break;
-	case 5:
-		color = Color::Purple;
-		break;
-	case 6:
-		color = Color::White;
-		break;
-  }
+#include "qcolor.h"
+#include "qnamespace.h"
+
+#include <algorithm>
+#include <random>
+#include <vector>
+
+// TODO: Add newFood function to relevant timings..
+
+void Food::newFood() {
+	int random_pos;
+	const std::vector<int> &blocks = this->parent()
+		->findChild<Snake*>()
+		->blocks;
+
+	do {
+		random_pos = randomNum(0, TOTAL_BLOCKS - 1);
+	} while (std::find(blocks.begin(), blocks.end(), random_pos) != blocks.end());
+
+	position = random_pos;
+	advance = randomNum(0, 1);
+
+	QColor color = advance ? Qt::red : Qt::black;
+
+	this->parent()
+		->parent()
+		->findChild<GameBlocks*>()
+		->changeItemColor(position, color);
 }
 
-void Food::setFood(int kind, int pos) {
-	this->kind.setKind(kind);
+int Food::getScore() {
+	return advance ? 2 : 1;
+}
 
-	position = pos;
+int Food::randomNum(int rl, int rr) {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> distr(rl, rr);
+
+	return distr(gen);
 }

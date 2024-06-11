@@ -20,6 +20,10 @@ private:
 	QBoxLayout *main_layout;
 	QPushButton *start_btn;
 	QPushButton *pause_btn;
+
+private slots:
+	void startBtnFunc();
+	void pauseBtnFunc();
 };
 
 #endif

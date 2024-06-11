@@ -17,19 +17,6 @@
 
 #define TOTAL_BLOCKS 25 * 15
 
-// Map
-class Map
-{
-	short blocks[TOTAL_BLOCKS];
-public:
-  Map() { this->reset(); }
-
-	void reset();
-
-	~Map() {}
-};
-
-
 // Game
 using namespace std::chrono;
 
@@ -38,8 +25,7 @@ class Game: public QObject
 	Q_OBJECT
 
 private:
-	Map blocks;
-	Food food;
+	Food *food;
 	Snake *snake;
 
 	int score;
@@ -48,13 +34,16 @@ private:
 	int stored_time;
 
 	bool paused;
+	bool initialized;
 	QTimer timer;
 
 public:
   Game(QObject *parent = nullptr);
-	~Game() {}
 
 	int getScore() const;
+
+	bool gameInitialized() const;
+	bool gamePaused() const;
 
 	// Time
 	void initTime();

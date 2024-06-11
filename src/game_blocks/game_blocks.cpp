@@ -9,6 +9,7 @@
 #include "qheaderview.h"
 #include "qnamespace.h"
 #include "qpainter.h"
+#include "qtableview.h"
 #include "qtablewidget.h"
 #include "qwidget.h"
 #include "qwindowdefs.h"
@@ -45,10 +46,8 @@ GameBlocks::GameBlocks(QWidget *parent)
 }
 
 void GameBlocks::resetSize(QSize size) {
-	// QSize nsize = QSize(size.width() * 0.98, size.height() * 0.95);
-
-	this->resize(size);
 	table->resize(size);
+	this->resize(size);
 	this->initTableSize(size);
 }
 

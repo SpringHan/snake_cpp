@@ -9,15 +9,24 @@
 // TODO: Remove
 #include <iostream>
 
-Snake::Snake(QObject *parent): QObject(parent) {
-	direction = MoveDirection::Left;
-	initBlocks();
-}
+Snake::Snake(QObject *parent): QObject(parent) {}
 
 void Snake::initBlocks() {
-	blocks.clear();
+	if (!blocks.empty()) {
+		GameBlocks *controller = this->parent()
+			->parent()
+			->findChild<GameBlocks*>();
+
+		for (int &i : blocks) {
+			controller->changeItemColor(i, Qt::white);
+		}
+
+		blocks.clear();
+	}
+
 	blocks.push_back(INITIAL_POS);
 	blocks.push_back(INITIAL_POS + 1);
+	direction = MoveDirection::Left;
 }
 
 void Snake::paintInitialBlocks() {
@@ -63,7 +72,7 @@ bool Snake::checkCollision(int new_head, MoveDirection direction) {
 			origin_line--;
 		}
 
-		temp = (float)new_head / 25;
+		temp = (float)(new_head + 1) / 25;
 		int new_line = (int)temp;
 		if (temp == new_line) {
 			new_line--;
@@ -103,7 +112,6 @@ void Snake::advance() {
 
 	if (checkCollision(head, temp_direction)) {
 		((Game*)this->parent())->finishGame();
-		initBlocks();
 		return;
 	}
 

@@ -1,5 +1,4 @@
 #include "./control_line.hpp"
-#include "../../mainwindow.hpp"
 #include "../game/game.hpp"
 
 #include "qboxlayout.h"
@@ -7,6 +6,7 @@
 #include "qnamespace.h"
 #include "qobjectdefs.h"
 #include "qpushbutton.h"
+#include "qtablewidget.h"
 #include "qwidget.h"
 
 // TODO: Remove this line.
@@ -27,11 +27,27 @@ ControlLine::ControlLine(QWidget *parent)
 	
 	this->setLayout(main_layout);
 
-	connect(start_btn, &QPushButton::clicked, this, [this]() {
-		this->parentWidget()->parentWidget()->findChild<Game*>()->startGame();
-	});
+	connect(start_btn, SIGNAL(clicked()), this, SLOT(startBtnFunc()));
+	connect(pause_btn, SIGNAL(clicked()), this, SLOT(pauseBtnFunc()));
+}
 
-	// connect(start_btn, &QPushButton::clicked, this, [this]() {
-	// 	this->parentWidget()->findChild<GameBlocks*>()->changeItemColor(0, Qt::red);
-	// });
+void ControlLine::startBtnFunc() {
+	start_btn->setText("重开");
+	pause_btn->setText("暂停");
+	this->parentWidget()->parentWidget()->findChild<Game*>()->startGame();
+}
+
+void ControlLine::pauseBtnFunc() {
+	Game *game = this->parentWidget()->parentWidget()->findChild<Game*>();
+	if (!game->gameInitialized()) {
+		return;
+	}
+
+	if (game->gamePaused()) {
+		pause_btn->setText("暂停");
+		game->continueGame();
+	} else {
+		pause_btn->setText("继续");
+		game->pauseGame();
+	}
 }

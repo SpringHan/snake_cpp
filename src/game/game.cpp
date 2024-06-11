@@ -1,5 +1,6 @@
 #include "game.hpp"
 
+#include "food.hpp"
 #include "qobject.h"
 #include "qobjectdefs.h"
 #include "snake.hpp"
@@ -12,39 +13,61 @@
 // TODO: Remove
 #include <iostream>
 
-// Map
-void Map::reset() {
-	for (short &x : this->blocks) {
-		x = 0;
-	}
-}
-
 // Game
 Game::Game(QObject *parent): QObject(parent) {
 	snake = new Snake(this);
+	food = new Food(this);
 
 	stored_time = 0;
 	paused = true;
-	// TODO: Start timer.
+	initialized = false;
 }
 
 void Game::startGame() {
 	paused = false;
+
+	if (initialized) {
+		stored_time = 0;
+
+		snake->initBlocks();
+		snake->paintInitialBlocks();
+		initTime();
+		timer.start(400);
+		return;
+	}
+
+	initialized = true;
+
+	snake->initBlocks();
 	snake->paintInitialBlocks();
 	connect(&timer, SIGNAL(timeout()), snake, SLOT(advance()));
-	timer.start(900);
+
+	initTime();
+	timer.start(400);
 }
 
 void Game::pauseGame() {
+	if (!initialized) {
+		return;
+	}
+
 	stored_time += this->playTime();
 	paused = true;
+	timer.stop();
 }
 
 void Game::continueGame() {
+	if (!initialized) {
+		return;
+	}
+
+	paused = false;
 	this->initTime();
+	timer.start(400);
 }
 
 void Game::finishGame() {
+	pauseGame();
 }
 
 void Game::initTime() {
@@ -74,6 +97,14 @@ void Game::changeDirection(MoveDirection direction) {
 	}
 
 	snake->direction = direction;
+}
+
+bool Game::gamePaused() const {
+	return paused;
+}
+
+bool Game::gameInitialized() const {
+	return initialized;
 }
 
 // Utils

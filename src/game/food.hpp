@@ -3,38 +3,26 @@
 #ifndef _FOOD_H_
 #define _FOOD_H_
 
-enum Color {
-	Red,
-	Orange,
-	Yellow,
-	Green,
-	Blue,
-	Purple,
-	White
-};
+#include "qobject.h"
+#include "qobjectdefs.h"
 
-class FoodKind
+#include <QObject>
+
+class Food: public QObject
 {
-	Color color;
-public:
-  FoodKind() {}
-	~FoodKind() {}
+	Q_OBJECT
 
-	void setKind(int kind);
-
-	friend class Food;
-};
-
-class Food
-{
-	FoodKind kind;
+private:
+	bool advance;
 	int position;
-public:
-  Food() {}
-	~Food() {}
 
-	int earnScore() { return kind.color; }
-	void setFood(int kind, int pos);
+	int randomNum(int rl, int rr);
+
+public:
+  Food(QObject *parent = nullptr): QObject(parent) {}
+
+	void newFood();
+	int getScore();
 };
 
 #endif
