@@ -34,7 +34,9 @@ void Game::startGame() {
 		initTime();
 		timer.start(REFRESH_TIME);
 
-		this->parent()->findChild<ControlLine*>()->showTime(false);
+		ControlLine *controller = this->parent()->findChild<ControlLine*>();
+		controller->changeScore(0);
+		controller->showTime(false);
 		return;
 	}
 
