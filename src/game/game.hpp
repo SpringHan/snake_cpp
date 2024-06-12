@@ -2,12 +2,8 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#include "qobject.h"
-#include "qobjectdefs.h"
-
 #include "./food.hpp"
 #include "./snake.hpp"
-#include "qtimer.h"
 
 #include <chrono>
 #include <string>
@@ -53,7 +49,6 @@ public:
 	void startGame();
 	void pauseGame();
 	void continueGame();
-	void finishGame();
 
 	// Score
 	void addScore();

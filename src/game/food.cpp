@@ -3,9 +3,6 @@
 #include "./snake.hpp"
 #include "../game_blocks/game_blocks.hpp"
 
-#include "qcolor.h"
-#include "qnamespace.h"
-
 #include <algorithm>
 #include <random>
 #include <vector>

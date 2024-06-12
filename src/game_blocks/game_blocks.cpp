@@ -1,27 +1,8 @@
 #include "./game_blocks.hpp"
 
-#include "qabstractitemview.h"
-#include "qboxlayout.h"
-#include "qbrush.h"
-#include "qcolor.h"
-#include "qgraphicsscene.h"
-#include "qgraphicsview.h"
-#include "qheaderview.h"
-#include "qnamespace.h"
-#include "qpainter.h"
-#include "qtableview.h"
-#include "qtablewidget.h"
-#include "qwidget.h"
-#include "qwindowdefs.h"
-
 #include <sstream>
 
-#include <QPixmap>
-#include <QPainter>
 #include <QHeaderView>
-
-// TODO: Remove
-#include <iostream>
 
 GameBlocks::GameBlocks(QWidget *parent)
 	:QWidget(parent)

@@ -3,13 +3,6 @@
 #include "./food.hpp"
 #include "../game_blocks/game_blocks.hpp"
 
-#include "qcolor.h"
-#include "qnamespace.h"
-#include "qobject.h"
-
-// TODO: Remove
-#include <iostream>
-
 Snake::Snake(QObject *parent): QObject(parent) {}
 
 void Snake::initBlocks() {
@@ -91,7 +84,26 @@ bool Snake::checkCollision(int new_head, MoveDirection direction) {
 	return false;
 }
 
+void Snake::changeDirection() {
+	if (!next_to.empty()) {
+		int origin = this->direction;
+		int modify_to = next_to[0];
+
+		next_to.erase(next_to.begin());
+
+		if (origin == modify_to || origin == -modify_to) {
+			return;
+		}
+
+		this->direction = (MoveDirection)modify_to;
+	}
+}
+
 void Snake::advance() {
+	mtx.lock();
+
+	this->changeDirection();
+
 	int head;
 	MoveDirection temp_direction = this->direction;
 
@@ -111,7 +123,8 @@ void Snake::advance() {
 	}
 
 	if (checkCollision(head, temp_direction)) {
-		((Game*)this->parent())->finishGame();
+		mtx.unlock();
+		((Game*)this->parent())->pauseGame();
 		return;
 	}
 
@@ -120,15 +133,18 @@ void Snake::advance() {
 	// Food check
 	Food *food = this->parent()->findChild<Food*>();
 
-	// TODO: Add score
 	if (food->getPosition() == head) {
-		food->newFood();
 		((Game*)this->parent())->addScore();
+		food->newFood();
 		updateBlocks(true);
+
+		mtx.unlock();
 		return;
 	}
 
 	unused_block = blocks.back();
 	blocks.pop_back();
 	updateBlocks();
+
+	mtx.unlock();
 }

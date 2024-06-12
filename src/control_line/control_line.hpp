@@ -1,13 +1,12 @@
 #ifndef CONTROL_LINE
 #define CONTROL_LINE
 
-#include "qboxlayout.h"
-#include "qpushbutton.h"
-#include "qwidget.h"
+#include <string>
 
 #include <QWidget>
 #include <QBoxLayout>
 #include <QPushButton>
+#include <QLabel>
 
 class ControlLine: public QWidget
 {
@@ -16,14 +15,20 @@ class ControlLine: public QWidget
 public:
   ControlLine(QWidget *parent = nullptr);
 
+	void changeScore(int score);
+	void changeTime(std::string time);
+	void showTime(bool show);
+	void pauseBtnFunc();
+
 private:
 	QBoxLayout *main_layout;
 	QPushButton *start_btn;
 	QPushButton *pause_btn;
+	QLabel *score;
+	QLabel *time;
 
 private slots:
 	void startBtnFunc();
-	void pauseBtnFunc();
 };
 
 #endif

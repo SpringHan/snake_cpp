@@ -1,17 +1,9 @@
 #include "mainwindow.hpp"
 
-#include "qlabel.h"
-#include "qnamespace.h"
-#include "qsize.h"
-#include "qwidget.h"
-
 #include "src/control_line/control_line.hpp"
 #include "src/game/game.hpp"
 #include "src/game/snake.hpp"
 #include "src/game_blocks/game_blocks.hpp"
-
-// TODO: Debug, remove this line.
-#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -56,6 +48,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 		break;
 	case Qt::Key_Right:
 		game->changeDirection(MoveDirection::Right);
+		break;
+	case Qt::Key_P:
+		control_line->pauseBtnFunc();
 		break;
 	default:
 		return;

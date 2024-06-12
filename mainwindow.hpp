@@ -5,8 +5,6 @@
 #include "./src/game_blocks/game_blocks.hpp"
 #include "./src/game/game.hpp"
 
-#include "qwidget.h"
-
 #include <QMainWindow>
 #include <QTableView>
 #include <QBoxLayout>

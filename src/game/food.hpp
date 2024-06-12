@@ -3,9 +3,6 @@
 #ifndef _FOOD_H_
 #define _FOOD_H_
 
-#include "qobject.h"
-#include "qobjectdefs.h"
-
 #include <QObject>
 
 class Food: public QObject

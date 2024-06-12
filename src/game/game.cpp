@@ -1,17 +1,12 @@
 #include "game.hpp"
-
-#include "food.hpp"
-#include "qobject.h"
-#include "qobjectdefs.h"
-#include "snake.hpp"
+#include "../control_line/control_line.hpp"
 
 #include <chrono>
 
 #include <string>
 #include <sstream>
 
-// TODO: Remove
-#include <iostream>
+#define REFRESH_TIME 350
 
 // Game
 Game::Game(QObject *parent): QObject(parent) {
@@ -37,7 +32,9 @@ void Game::startGame() {
 		food->newFood();
 
 		initTime();
-		timer.start(400);
+		timer.start(REFRESH_TIME);
+
+		this->parent()->findChild<ControlLine*>()->showTime(false);
 		return;
 	}
 
@@ -49,7 +46,7 @@ void Game::startGame() {
 	connect(&timer, SIGNAL(timeout()), snake, SLOT(advance()));
 
 	initTime();
-	timer.start(400);
+	timer.start(REFRESH_TIME);
 }
 
 void Game::pauseGame() {
@@ -60,6 +57,10 @@ void Game::pauseGame() {
 	stored_time += this->playTime();
 	paused = true;
 	timer.stop();
+
+	this->parent()
+		->findChild<ControlLine*>()
+		->changeTime(time_format(stored_time));
 }
 
 void Game::continueGame() {
@@ -69,16 +70,15 @@ void Game::continueGame() {
 
 	paused = false;
 	this->initTime();
-	timer.start(400);
-}
+	timer.start(REFRESH_TIME);
 
-void Game::finishGame() {
-	pauseGame();
-	// TODO: Display time & score.
+	this->parent()->findChild<ControlLine*>()->showTime(false);
 }
 
 void Game::addScore() {
 	score += food->getScore();
+
+	this->parent()->findChild<ControlLine*>()->changeScore(score);
 }
 
 void Game::initTime() {
@@ -100,14 +100,11 @@ void Game::changeDirection(MoveDirection direction) {
 		return;
 	}
 
-	int origin = snake->direction;
-	int modify_to = direction;
+	snake->mtx.lock();
 
-	if (origin == modify_to || origin == -modify_to) {
-		return;
-	}
+	snake->next_to.push_back(direction);
 
-	snake->direction = direction;
+	snake->mtx.unlock();
 }
 
 bool Game::gamePaused() const {
@@ -140,7 +137,7 @@ std::string time_format(int time) {
 
 	std::stringstream ss;
 
-	ss << hour << "小时" << minute << "分钟" << second << "秒";
+	ss << hour << ":" << minute << ":" << second;
 
 	return ss.str();
 }

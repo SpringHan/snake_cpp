@@ -1,17 +1,7 @@
 #include "./control_line.hpp"
 #include "../game/game.hpp"
-#include "../game_blocks/game_blocks.hpp"
 
-#include "qboxlayout.h"
-#include "qmainwindow.h"
-#include "qnamespace.h"
-#include "qobjectdefs.h"
-#include "qpushbutton.h"
-#include "qtablewidget.h"
-#include "qwidget.h"
-
-// TODO: Remove this line.
-#include <iostream>
+#include <sstream>
 
 ControlLine::ControlLine(QWidget *parent)
 	:QWidget(parent)
@@ -23,22 +13,48 @@ ControlLine::ControlLine(QWidget *parent)
 	start_btn->setFocusPolicy(Qt::NoFocus);
 	pause_btn->setFocusPolicy(Qt::NoFocus);
 
+	score = new QLabel;
+	time = new QLabel;
+	score->setText("得分: 0");
+	time->setText("时间: ");
+	time->setVisible(false);
+
 	main_layout->addWidget(start_btn, 0, Qt::AlignLeft);
-	main_layout->addWidget(pause_btn, 1, Qt::AlignRight);
+	main_layout->addWidget(score, 0, Qt::AlignCenter);
+	main_layout->addWidget(time, 0, Qt::AlignCenter);
+	main_layout->addWidget(pause_btn, 0, Qt::AlignRight);
 	
 	this->setLayout(main_layout);
 
 	connect(start_btn, SIGNAL(clicked()), this, SLOT(startBtnFunc()));
-	connect(pause_btn, SIGNAL(clicked()), this, SLOT(pauseBtnFunc()));
+	connect(pause_btn, &QPushButton::clicked, this, [this]() {
+		this->pauseBtnFunc();
+	});
+}
+
+void ControlLine::changeScore(int score) {
+	std::stringstream text;
+	text << "得分: " << score;
+
+	this->score->setText(QString::fromStdString(text.str()));
+}
+
+void ControlLine::changeTime(std::string time) {
+	std::stringstream text;
+	text << "时间: " << time;
+
+	this->time->setText(QString::fromStdString(text.str()));
+	showTime(true);
+}
+
+void ControlLine::showTime(bool show) {
+	time->setVisible(show);
 }
 
 void ControlLine::startBtnFunc() {
 	start_btn->setText("重开");
 	pause_btn->setText("暂停");
 	this->parentWidget()->parentWidget()->findChild<Game*>()->startGame();
-
-	// TODO: Remove this line.
-	// this->parentWidget()->findChild<GameBlocks*>()->changeItemColor(48, Qt::black);
 }
 
 void ControlLine::pauseBtnFunc() {
