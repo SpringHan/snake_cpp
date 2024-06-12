@@ -18,6 +18,7 @@ Game::Game(QObject *parent): QObject(parent) {
 	snake = new Snake(this);
 	food = new Food(this);
 
+	score = 0;
 	stored_time = 0;
 	paused = true;
 	initialized = false;
@@ -28,9 +29,13 @@ void Game::startGame() {
 
 	if (initialized) {
 		stored_time = 0;
+		score = 0;
 
 		snake->initBlocks();
 		snake->paintInitialBlocks();
+		food->removeFood();
+		food->newFood();
+
 		initTime();
 		timer.start(400);
 		return;
@@ -40,6 +45,7 @@ void Game::startGame() {
 
 	snake->initBlocks();
 	snake->paintInitialBlocks();
+	food->newFood();
 	connect(&timer, SIGNAL(timeout()), snake, SLOT(advance()));
 
 	initTime();
@@ -68,6 +74,11 @@ void Game::continueGame() {
 
 void Game::finishGame() {
 	pauseGame();
+	// TODO: Display time & score.
+}
+
+void Game::addScore() {
+	score += food->getScore();
 }
 
 void Game::initTime() {

@@ -1,5 +1,6 @@
 #include "./control_line.hpp"
 #include "../game/game.hpp"
+#include "../game_blocks/game_blocks.hpp"
 
 #include "qboxlayout.h"
 #include "qmainwindow.h"
@@ -35,6 +36,9 @@ void ControlLine::startBtnFunc() {
 	start_btn->setText("重开");
 	pause_btn->setText("暂停");
 	this->parentWidget()->parentWidget()->findChild<Game*>()->startGame();
+
+	// TODO: Remove this line.
+	// this->parentWidget()->findChild<GameBlocks*>()->changeItemColor(48, Qt::black);
 }
 
 void ControlLine::pauseBtnFunc() {

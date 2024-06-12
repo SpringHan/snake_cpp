@@ -1,5 +1,6 @@
 #include "./game.hpp"
 #include "./snake.hpp"
+#include "./food.hpp"
 #include "../game_blocks/game_blocks.hpp"
 
 #include "qcolor.h"
@@ -30,14 +31,10 @@ void Snake::initBlocks() {
 }
 
 void Snake::paintInitialBlocks() {
-	updateBlocks(true);
+	updateBlocks(true, true);
 }
 
-void Snake::addBlock(int pos) {
-	blocks.push_back(pos);
-}
-
-void Snake::updateBlocks(bool initial) {
+void Snake::updateBlocks(bool no_remove, bool initial) {
 	GameBlocks *controller = this->parent()
 		->parent()
 		->findChild<GameBlocks*>();
@@ -51,7 +48,10 @@ void Snake::updateBlocks(bool initial) {
 	}  
 
 	controller->changeItemColor(blocks[0], Qt::black);
-	controller->changeItemColor(unused_block, Qt::white);
+
+	if (!no_remove) {
+		controller->changeItemColor(unused_block, Qt::white);
+	}
 }
 
 bool Snake::checkCollision(int new_head, MoveDirection direction) {
@@ -115,8 +115,20 @@ void Snake::advance() {
 		return;
 	}
 
+	blocks.insert(blocks.begin(), head);
+
+	// Food check
+	Food *food = this->parent()->findChild<Food*>();
+
+	// TODO: Add score
+	if (food->getPosition() == head) {
+		food->newFood();
+		((Game*)this->parent())->addScore();
+		updateBlocks(true);
+		return;
+	}
+
 	unused_block = blocks.back();
 	blocks.pop_back();
-	blocks.insert(blocks.begin(), head);
 	updateBlocks();
 }

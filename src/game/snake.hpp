@@ -28,8 +28,7 @@ private:
 	int unused_block;
 
 	bool checkCollision(int new_head, MoveDirection direction);
-	void addBlock(int pos);
-	void updateBlocks(bool initial = false);
+	void updateBlocks(bool no_remove = false, bool initial = false);
 	void initBlocks();
 public:
   Snake(QObject *parent = nullptr);

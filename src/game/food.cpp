@@ -33,6 +33,13 @@ void Food::newFood() {
 		->changeItemColor(position, color);
 }
 
+void Food::removeFood() {
+	this->parent()
+		->parent()
+		->findChild<GameBlocks*>()
+		->changeItemColor(position, Qt::white);
+}
+
 int Food::getScore() {
 	return advance ? 2 : 1;
 }

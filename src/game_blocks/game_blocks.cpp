@@ -70,8 +70,8 @@ void GameBlocks::initTableSize(QSize size) {
 }
 
 void GameBlocks::initTableItems() {
-	for (int i = 0; i < 25 ; i++) {
-		for (int j = 0; j < 15; j++) {
+	for (int i = 0; i < 15 ; i++) {
+		for (int j = 0; j < 25; j++) {
 			table->setItem(i, j, new QTableWidgetItem);
 		}
 	}
@@ -82,11 +82,10 @@ void GameBlocks::changeItemColor(int idx, QColor color) {
 	int line = (int)temp;
 
 	if (temp == line) {
-		line--;
+    line--;
 	}
 
 	int column = idx - line * 25;
-	line--;
 
 	table->item(line, column)->setBackground(color);
 }

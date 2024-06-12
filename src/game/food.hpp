@@ -22,7 +22,12 @@ public:
   Food(QObject *parent = nullptr): QObject(parent) {}
 
 	void newFood();
+	void removeFood();
 	int getScore();
+
+	int getPosition() const {
+		return position;
+	}
 };
 
 #endif

@@ -55,6 +55,9 @@ public:
 	void continueGame();
 	void finishGame();
 
+	// Score
+	void addScore();
+
 	void changeDirection(MoveDirection direction);
 };
 
