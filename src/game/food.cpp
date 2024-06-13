@@ -7,8 +7,6 @@
 #include <random>
 #include <vector>
 
-// TODO: Add newFood function to relevant timings..
-
 void Food::newFood() {
 	int random_pos;
 	const std::vector<int> &blocks = this->parent()
