@@ -79,8 +79,22 @@ void Game::continueGame() {
 
 void Game::addScore() {
 	score += food->getScore();
+	adjustDifficulty();
 
 	this->parent()->findChild<ControlLine*>()->changeScore(score);
+}
+
+void Game::adjustDifficulty() {
+	int temp = score / 20;
+
+	if (temp > 0) {
+		int interval = timer.interval() - temp;
+		if (interval < 100) {
+			interval = 100;
+		}
+
+		timer.setInterval(interval);
+	}
 }
 
 void Game::initTime() {

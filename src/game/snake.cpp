@@ -43,7 +43,10 @@ void Snake::updateBlocks(bool no_remove, bool initial) {
 	controller->changeItemColor(blocks[0], Qt::black);
 
 	if (!no_remove) {
-		controller->changeItemColor(unused_block, Qt::white);
+		// Avoid the forcible erasing when the head is moving to the tail.
+		if (unused_block != blocks[0]) {
+			controller->changeItemColor(unused_block, Qt::white);
+		}
 	}
 }
 

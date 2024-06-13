@@ -33,6 +33,8 @@ private:
 	bool initialized;
 	QTimer timer;
 
+	void adjustDifficulty();
+
 public:
   Game(QObject *parent = nullptr);
 
